@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"student_management/internal/config"
+	"student_management/internal/model"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -21,7 +22,10 @@ func ConnectDB(cfg *config.Config) {
 		log.Fatal("failed to connect to db", err)
 	}
 
-	//db.AutoMigrate()
+	err = db.AutoMigrate(&model.Student{})
+	if err != nil {
+		log.Fatal("❌ Migration failed:", err)
+	}
 
 	DB = db
 	log.Println("connected to the database successfully!")

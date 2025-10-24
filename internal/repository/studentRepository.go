@@ -1,0 +1,19 @@
+package repository
+
+import (
+	"student_management/internal/model"
+
+	"gorm.io/gorm"
+)
+
+type StudentRepository struct {
+	DB *gorm.DB
+}
+
+func NewStudentRepository(db *gorm.DB) *StudentRepository {
+	return &StudentRepository{DB: db}
+}
+
+func (r *StudentRepository) Create(student *model.Student) error {
+	return r.DB.Create(student).Error
+}
