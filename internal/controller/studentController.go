@@ -2,6 +2,7 @@ package controller
 
 import (
 	"net/http"
+	"student_management/internal/dto"
 	"student_management/internal/model"
 	"student_management/internal/service"
 
@@ -18,10 +19,15 @@ func NewStudentController(s *service.StudentService) *StudentController {
 
 // create new student
 func (c *StudentController) Create(ctx *gin.Context) {
-	var student model.Student
-	if err := ctx.ShouldBindJSON(&student); err != nil {
+	var req dto.CreateStudentRequest
+	if err := ctx.ShouldBindJSON(&req); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
+	}
+
+	student := model.Student{
+		Name:  req.Name,
+		Email: req.Email,
 	}
 
 	if err := c.service.Create(&student); err != nil {
