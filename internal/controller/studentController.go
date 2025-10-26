@@ -2,6 +2,7 @@ package controller
 
 import (
 	"net/http"
+	"strconv"
 	"student_management/internal/dto"
 	"student_management/internal/model"
 	"student_management/internal/service"
@@ -47,4 +48,20 @@ func (c *StudentController) GetAll(ctx *gin.Context) {
 	}
 
 	ctx.JSON(http.StatusOK, students)
+}
+
+// get student by id
+func (c *StudentController) GetById(ctx *gin.Context) {
+	strId := ctx.Param("id")
+	id, err := strconv.Atoi(strId)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	student, err := c.service.GetById(uint(id))
+	if err != nil {
+		ctx.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
+		return
+	}
+	ctx.JSON(http.StatusOK, student)
 }

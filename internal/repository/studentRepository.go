@@ -23,3 +23,9 @@ func (r *StudentRepository) FindAll() ([]model.Student, error) {
 	err := r.DB.Find(&students).Error
 	return students, err
 }
+
+func (r *StudentRepository) FindById(id uint) (*model.Student, error) {
+	var student model.Student
+	err := r.DB.First(&student, id).Error
+	return &student, err
+}

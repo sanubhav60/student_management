@@ -20,3 +20,7 @@ func (s *StudentService) Create(student *model.Student) error {
 func (s *StudentService) GetAll() ([]model.Student, error) {
 	return s.repo.FindAll()
 }
+
+func (s *StudentService) GetById(id uint) (*model.Student, error) {
+	return s.repo.FindById(id)
+}
