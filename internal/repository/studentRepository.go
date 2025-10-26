@@ -17,3 +17,9 @@ func NewStudentRepository(db *gorm.DB) *StudentRepository {
 func (r *StudentRepository) Create(student *model.Student) error {
 	return r.DB.Create(student).Error
 }
+
+func (r *StudentRepository) FindAll() ([]model.Student, error) {
+	var students []model.Student
+	err := r.DB.Find(&students).Error
+	return students, err
+}

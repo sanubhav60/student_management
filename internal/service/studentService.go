@@ -16,3 +16,7 @@ func NewStudentService(repo *repository.StudentRepository) *StudentService {
 func (s *StudentService) Create(student *model.Student) error {
 	return s.repo.Create(student)
 }
+
+func (s *StudentService) GetAll() ([]model.Student, error) {
+	return s.repo.FindAll()
+}

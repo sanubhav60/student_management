@@ -37,3 +37,14 @@ func (c *StudentController) Create(ctx *gin.Context) {
 
 	ctx.JSON(http.StatusCreated, student)
 }
+
+// get all student
+func (c *StudentController) GetAll(ctx *gin.Context) {
+	students, err := c.service.GetAll()
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, students)
+}
