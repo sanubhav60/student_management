@@ -98,3 +98,18 @@ func (c *StudentController) Update(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, existingStudent)
 
 }
+
+// delete student
+func (c *StudentController) DeleteStudent(ctx *gin.Context) {
+	id, err := strconv.Atoi(ctx.Param("id"))
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	if err := c.service.DeleteStudent(uint(id)); err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	ctx.Status(http.StatusNoContent)
+}

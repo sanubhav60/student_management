@@ -28,3 +28,7 @@ func (s *StudentService) GetById(id uint) (*model.Student, error) {
 func (s *StudentService) UpdateStudent(student *model.Student) error {
 	return s.repo.UpdateStudent(student)
 }
+
+func (s *StudentService) DeleteStudent(id uint) error {
+	return s.repo.DeleteStudent(id)
+}

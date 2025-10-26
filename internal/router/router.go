@@ -14,6 +14,7 @@ func SetUpRouter(studentController *controller.StudentController) *gin.Engine {
 		api.GET("/get-all-students", studentController.GetAll)
 		api.GET("/get-by-id/:id", studentController.GetById)
 		api.PATCH("update-student/:id", studentController.Update)
+		api.DELETE("delete-student/:id", studentController.DeleteStudent)
 	}
 
 	return r

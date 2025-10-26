@@ -33,3 +33,7 @@ func (r *StudentRepository) FindById(id uint) (*model.Student, error) {
 func (r *StudentRepository) UpdateStudent(student *model.Student) error {
 	return r.DB.Save(student).Error
 }
+
+func (r *StudentRepository) DeleteStudent(id uint) error {
+	return r.DB.Delete(&model.Student{}, id).Error
+}
