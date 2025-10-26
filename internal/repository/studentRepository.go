@@ -29,3 +29,7 @@ func (r *StudentRepository) FindById(id uint) (*model.Student, error) {
 	err := r.DB.First(&student, id).Error
 	return &student, err
 }
+
+func (r *StudentRepository) UpdateStudent(student *model.Student) error {
+	return r.DB.Save(student).Error
+}

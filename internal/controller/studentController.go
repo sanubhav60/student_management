@@ -65,3 +65,36 @@ func (c *StudentController) GetById(ctx *gin.Context) {
 	}
 	ctx.JSON(http.StatusOK, student)
 }
+
+// update student
+func (c *StudentController) Update(ctx *gin.Context) {
+	strId := ctx.Param("id")
+	id, err := strconv.Atoi(strId)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "invalid format"})
+		return
+	}
+
+	existingStudent, err := c.service.GetById(uint(id))
+	if err != nil {
+		ctx.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
+		return
+	}
+
+	var req dto.UpdateStudentRequest
+	if err := ctx.ShouldBindJSON(&req); err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	existingStudent.Name = req.Name
+	existingStudent.Email = req.Email
+
+	if err := c.service.UpdateStudent(existingStudent); err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, existingStudent)
+
+}

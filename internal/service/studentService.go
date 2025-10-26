@@ -24,3 +24,7 @@ func (s *StudentService) GetAll() ([]model.Student, error) {
 func (s *StudentService) GetById(id uint) (*model.Student, error) {
 	return s.repo.FindById(id)
 }
+
+func (s *StudentService) UpdateStudent(student *model.Student) error {
+	return s.repo.UpdateStudent(student)
+}
